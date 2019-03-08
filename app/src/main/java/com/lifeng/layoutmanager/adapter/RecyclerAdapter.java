@@ -1,7 +1,9 @@
 package com.lifeng.layoutmanager.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,20 +32,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private int src;
     private List<Been> results;
 
-    public RecyclerAdapter(int src,List<Been> results){
+    public RecyclerAdapter(int src, List<Been> results) {
         this.results = results;
         this.src = src;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext()).inflate(src, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         holder.imageView.setImageResource(results.get(position).getSrc());
         holder.textView.setText(results.get(position).getName());
     }
@@ -78,20 +81,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyItemRemoved(position);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView;
-        public ImageView imageView;
+        private TextView textView;
+        private ImageView imageView;
 
-        public MyViewHolder(View itemView) {
+        private MyViewHolder(View itemView) {
             super(itemView);
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            int width = wm.getDefaultDisplay().getWidth();
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            int width = 0;
+            if (wm != null) {
+                wm.getDefaultDisplay().getMetrics(outMetrics);
+            }
+            width = outMetrics.widthPixels;
             ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
-            layoutParams.height = width/4;
+            layoutParams.height = width / 4;
             itemView.setLayoutParams(layoutParams);
-            textView = (TextView) itemView.findViewById(R.id.item_text);
-            imageView = (ImageView) itemView.findViewById(R.id.item_img);
+            textView = itemView.findViewById(R.id.item_text);
+            imageView = itemView.findViewById(R.id.item_img);
         }
     }
 }

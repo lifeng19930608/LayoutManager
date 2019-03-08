@@ -30,7 +30,7 @@ import java.util.List;
  * 邮箱：470794349@qq.com
  * 修改简介：
  */
-public class FlowActivity extends AppCompatActivity implements MoveTouchCallback.OnDragListener{
+public class FlowActivity extends AppCompatActivity implements MoveTouchCallback.OnDragListener {
 
     private RecyclerView recyclerView;
     private Button button1;
@@ -49,45 +49,44 @@ public class FlowActivity extends AppCompatActivity implements MoveTouchCallback
     }
 
     //布局的初始化
-    private void initView(){
-        recyclerView= (RecyclerView) findViewById(R.id.recycle);
-        button1= (Button) findViewById(R.id.button1);
-        button2= (Button) findViewById(R.id.button2);
+    private void initView() {
+        recyclerView = findViewById(R.id.recycle);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
     }
 
     //数据的初始化
-    private void initData(){
-        lists=new ArrayList<>();
-        for(int i=0;i<3;i++){
-            lists.add(new Been( "收款", R.mipmap.takeout_ic_category_brand));
-            lists.add(new Been( "转账", R.mipmap.takeout_ic_category_flower));
-            lists.add(new Been( "余额宝", R.mipmap.takeout_ic_category_fruit));
-            lists.add(new Been( "手机充值", R.mipmap.takeout_ic_category_medicine));
-            lists.add(new Been( "医疗", R.mipmap.takeout_ic_category_motorcycle));
-            lists.add(new Been( "彩票", R.mipmap.takeout_ic_category_public));
-            lists.add(new Been( "电影", R.mipmap.takeout_ic_category_store));
-            lists.add(new Been( "游戏", R.mipmap.takeout_ic_category_sweet));
+    private void initData() {
+        lists = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            lists.add(new Been("收款", R.mipmap.takeout_ic_category_brand));
+            lists.add(new Been("转账", R.mipmap.takeout_ic_category_flower));
+            lists.add(new Been("余额宝", R.mipmap.takeout_ic_category_fruit));
+            lists.add(new Been("手机充值", R.mipmap.takeout_ic_category_medicine));
+            lists.add(new Been("医疗", R.mipmap.takeout_ic_category_motorcycle));
+            lists.add(new Been("彩票", R.mipmap.takeout_ic_category_public));
+            lists.add(new Been("电影", R.mipmap.takeout_ic_category_store));
+            lists.add(new Been("游戏", R.mipmap.takeout_ic_category_sweet));
         }
-        recyclerAdapter=new RecyclerAdapter(R.layout.item_flow,lists);
+        recyclerAdapter = new RecyclerAdapter(R.layout.item_flow, lists);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(FlowActivity.this,4));
+        recyclerView.setLayoutManager(new GridLayoutManager(FlowActivity.this, 4));
         recyclerView.addItemDecoration(new DividerGridItemDecoration(FlowActivity.this));
-        itemTouchHelper=new ItemTouchHelper(new MoveTouchCallback(recyclerAdapter));
+        itemTouchHelper = new ItemTouchHelper(new MoveTouchCallback(recyclerAdapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        itemTouchHelper=new ItemTouchHelper(new MoveDeleteTouchCallback(0,ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
-                recyclerAdapter,lists));
+        itemTouchHelper = new ItemTouchHelper(new MoveDeleteTouchCallback(0, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                recyclerAdapter, lists));
         itemTouchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(recyclerAdapter);
     }
 
     //控件的监听
-    private void setListener(){
-
+    private void setListener() {
         //添加新的项（在末尾）
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lists.add(new Been("我是新加项",R.mipmap.takeout_ic_category_sweet));
+                lists.add(new Been("我是新加项", R.mipmap.takeout_ic_category_sweet));
                 recyclerAdapter.notifyDataSetChanged();
             }
         });
@@ -96,8 +95,8 @@ public class FlowActivity extends AppCompatActivity implements MoveTouchCallback
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(lists.size()>0){
-                    lists.remove(lists.size()-1);
+                if (lists.size() > 0) {
+                    lists.remove(lists.size() - 1);
                     recyclerAdapter.notifyDataSetChanged();
                 }
             }
@@ -108,15 +107,16 @@ public class FlowActivity extends AppCompatActivity implements MoveTouchCallback
             @Override
             public void onLongClick(RecyclerView.ViewHolder vh) {
                 //这里可以控制不可拖动的布局（此时的情况为最后一个不可拖动）
-                if (vh.getLayoutPosition()!=lists.size()-1) {
+                if (vh.getLayoutPosition() != lists.size() - 1) {
                     itemTouchHelper.startDrag(vh);
                     VibratorUtils.Vibrate(FlowActivity.this, 70);   //震动70ms
                 }
             }
+
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
                 Been been = lists.get(vh.getLayoutPosition());
-                Toast.makeText(FlowActivity.this,been.getName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(FlowActivity.this, been.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 

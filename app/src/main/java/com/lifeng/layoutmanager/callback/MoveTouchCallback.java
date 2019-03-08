@@ -3,6 +3,7 @@ package com.lifeng.layoutmanager.callback;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -19,7 +20,7 @@ public class MoveTouchCallback extends ItemTouchHelper.Callback {
 
     private ItemTouchAdapter itemTouchAdapter;
 
-    public MoveTouchCallback(ItemTouchAdapter itemTouchAdapter){
+    public MoveTouchCallback(ItemTouchAdapter itemTouchAdapter) {
         this.itemTouchAdapter = itemTouchAdapter;
     }
 
@@ -34,7 +35,7 @@ public class MoveTouchCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
             final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             final int swipeFlags = 0;
@@ -48,21 +49,21 @@ public class MoveTouchCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
         int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-        itemTouchAdapter.onMove(fromPosition,toPosition);
+        itemTouchAdapter.onMove(fromPosition, toPosition);
         return true;
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
         itemTouchAdapter.onSwiped(position);
     }
 
     @Override
-    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             //滑动时改变Item的透明度
             final float alpha = 1 - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
@@ -90,13 +91,13 @@ public class MoveTouchCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
         viewHolder.itemView.setAlpha(1.0f);
         if (background != null) viewHolder.itemView.setBackgroundDrawable(background);
         if (bkcolor != -1) viewHolder.itemView.setBackgroundColor(bkcolor);
         //viewHolder.itemView.setBackgroundColor(0);
-        if (onDragListener!=null){
+        if (onDragListener != null) {
             onDragListener.onFinishDrag();
         }
     }
@@ -110,12 +111,14 @@ public class MoveTouchCallback extends ItemTouchHelper.Callback {
         this.onDragListener = onDragListener;
         return this;
     }
-    public interface OnDragListener{
+
+    public interface OnDragListener {
         void onFinishDrag();
     }
 
     public interface ItemTouchAdapter {
-        void onMove(int fromPosition,int toPosition);
+        void onMove(int fromPosition, int toPosition);
+
         void onSwiped(int position);
     }
 }

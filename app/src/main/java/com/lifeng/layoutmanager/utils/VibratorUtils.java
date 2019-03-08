@@ -24,6 +24,7 @@ public class VibratorUtils {
         Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(milliseconds);
     }
+
     public static void Vibrate(final Activity activity, long[] pattern, boolean isRepeat) {
         Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(pattern, isRepeat ? 1 : -1);

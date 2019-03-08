@@ -13,9 +13,9 @@ public class Been {
     private int src;
     private String name;
 
-    public Been(String name,int src){
-        this.name=name;
-        this.src=src;
+    public Been(String name, int src) {
+        this.name = name;
+        this.src = src;
     }
 
     public int getSrc() {

@@ -16,15 +16,15 @@ import java.util.List;
  * 邮箱：470794349@qq.com
  * 修改简介：
  */
-public class MoveDeleteTouchCallback extends ItemTouchHelper.SimpleCallback{
+public class MoveDeleteTouchCallback extends ItemTouchHelper.SimpleCallback {
 
     private RecyclerAdapter recyclerAdapter;
     private List<Been> lists;
 
-    public MoveDeleteTouchCallback(int dragDirs, int swipeDirs,RecyclerAdapter recyclerAdapter,List<Been> lists) {
+    public MoveDeleteTouchCallback(int dragDirs, int swipeDirs, RecyclerAdapter recyclerAdapter, List<Been> lists) {
         super(dragDirs, swipeDirs);
-        this.recyclerAdapter=recyclerAdapter;
-        this.lists=lists;
+        this.recyclerAdapter = recyclerAdapter;
+        this.lists = lists;
     }
 
     @Override

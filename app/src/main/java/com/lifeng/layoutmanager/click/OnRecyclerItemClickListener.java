@@ -14,14 +14,14 @@ import android.view.View;
  * 邮箱：470794349@qq.com
  * 修改简介：
  */
-public class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchListener{
+public class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetectorCompat mGestureDetector;
     private RecyclerView recyclerView;
 
-    public OnRecyclerItemClickListener(RecyclerView recyclerView){
+    public OnRecyclerItemClickListener(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
-        mGestureDetector = new GestureDetectorCompat(recyclerView.getContext(),new ItemTouchHelperGestureListener());
+        mGestureDetector = new GestureDetectorCompat(recyclerView.getContext(), new ItemTouchHelperGestureListener());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchList
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (child!=null) {
+            if (child != null) {
                 RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
                 onItemClick(vh);
             }
@@ -55,14 +55,16 @@ public class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchList
         @Override
         public void onLongPress(MotionEvent e) {
             View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (child!=null) {
+            if (child != null) {
                 RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
                 onLongClick(vh);
             }
         }
     }
 
-    public void onLongClick(RecyclerView.ViewHolder vh){}
+    public void onLongClick(RecyclerView.ViewHolder vh) {
+    }
 
-    public void onItemClick(RecyclerView.ViewHolder vh){}
+    public void onItemClick(RecyclerView.ViewHolder vh) {
+    }
 }
